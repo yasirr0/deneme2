@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <link rel="icon" href="c:\xampp\htdocs\download.jpg" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YasirBz | Üye Girişi</title>
+  <style>
+    /* Sayfa ve arka plan stilini ayarlıyoruz */
+/* Sayfa ve arka plan stilini ayarlıyoruz */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background-image: url('https://dbdzm869oupei.cloudfront.net/img/quadres/preview/48874.png'); /* Arka plan resmi URL'si */
+  background-size: cover;
+  background-position: center;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Formun ana stilini ayarlıyoruz */
+.container {
+  background-color: rgba(255, 255, 255, 0.8); /* Yarı saydam beyaz arka plan */
+  padding: 30px;
+  border-radius: 8px;
+  width: 300px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  box-sizing: border-box; /* Padding'in içeriğe dahil olmasını sağlıyoruz */
+}
+
+/* Form elemanlarının stilini ayarlıyoruz */
+.container input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0; /* Yalnızca dikey margin */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box; /* Padding'in içeriğe dahil olmasını sağlıyoruz */
+}
+
+.container button {
+  width: 100%;
+  padding: 10px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.container button:hover {
+  background-color: #555;
+}
+
+.container p {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #777;
+}
+
+.container p a {
+  color: #333;
+  text-decoration: none;
+}
+
+.container p a:hover {
+  text-decoration: underline;
+}
+
+.toggle-link {
+  cursor: pointer;
+  color: #333;
+  text-decoration: underline;
+}
+
+/* Ana sayfaya dönüş butonunun stili */
+.home-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  width: auto;
+}
+
+.home-btn:hover {
+  background-color: #555;
+}
+
+/* Ortak giriş butonlarının stili */
+.oauth-btn {
+  width: 100%;
+  padding: 10px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.google-btn {
+  background-color: #db4437;
+}
+
+.google-btn:hover {
+  background-color: #c1351d;
+}
+
+.microsoft-btn {
+  background-color: #2a5599;
+}
+
+.microsoft-btn:hover {
+  background-color: #1e4176;
+}
+
+.apple-btn {
+  background-color: #333;
+}
+
+.apple-btn:hover {
+  background-color: #555;
+}
+
+
+  </style>
+</head>
+<body>
+
+  <!-- Login Form -->
+  <div id="login-form" class="container">
+    <h2>Giriş Yap</h2>
+    <form onsubmit="return handleLogin(event)">
+      <input type="text" id="login-username" name="username" placeholder="Kullanıcı Adı" required>
+      <input type="password" id="login-password" name="password" placeholder="Şifre" required>
+      <button type="submit">Giriş Yap</button>
+    </form>
+    <p>Hesabınız yok mu? <span class="toggle-link" onclick="toggleForm('register')">Kayıt Olun</span></p>
+    <p><a href="javascript:void(0)" class="toggle-link" onclick="toggleForm('forgot')">Şifremi Unuttum</a></p>
+    <a href="index.html" class="home-btn">Ana Sayfaya Dön</a>
+
+    <!-- OAuth giriş butonları -->
+    <button class="oauth-btn google-btn" onclick="window.open('https://accounts.google.com/signin', '_blank')">
+      Google ile Oturum Aç
+    </button>
+    <button class="oauth-btn microsoft-btn" onclick="window.open('https://login.microsoftonline.com/', '_blank')">
+      Microsoft ile Giriş Yap
+    </button>
+    <button class="oauth-btn apple-btn" onclick="window.open('https://appleid.apple.com/', '_blank')">
+      Apple ile Giriş Yap
+    </button>
+  </div>
+
+  <!-- Registration Form -->
+  <div id="register-form" class="container" style="display:none;">
+    <h2>Kayıt Ol</h2>
+    <form onsubmit="return handleRegister(event)">
+      <input type="text" id="register-username" name="username" placeholder="Kullanıcı Adı" required>
+      <input type="email" id="register-email" name="email" placeholder="E-posta Adresi" required>
+      <input type="password" id="register-password" name="password" placeholder="Şifre" required>
+      <input type="password" id="register-password-confirm" name="password-confirm" placeholder="Şifre Tekrar" required>
+      <button type="submit">Kayıt Ol</button>
+    </form>
+    <p>Zaten hesabınız var mı? <span class="toggle-link" onclick="toggleForm('login')">Giriş Yapın</span></p>
+    <a href="index.html" class="home-btn">Ana Sayfaya Dön</a>
+  </div>
+
+  <!-- Forgot Password Form -->
+  <div id="forgot-password-form" class="container" style="display:none;">
+    <h2>Şifremi Unuttum</h2>
+    <form onsubmit="return handleForgotPassword(event)">
+      <input type="email" id="forgot-email" name="email" placeholder="E-posta Adresi" required>
+      <button type="submit">Şifreyi Sıfırla</button>
+    </form>
+    <p><a href="javascript:void(0)" class="toggle-link" onclick="toggleForm('login')">Giriş Yapın</a> veya <a href="javascript:void(0)" class="toggle-link" onclick="toggleForm('register')">Kayıt Olun</a></p>
+    <a href="index.html" class="home-btn">Ana Sayfaya Dön</a>
+  </div>
+
+  <script>
+    // Formlar arasında geçiş yapmak için kullanılan fonksiyon
+    function toggleForm(formType) {
+      var loginForm = document.getElementById('login-form');
+      var registerForm = document.getElementById('register-form');
+      var forgotPasswordForm = document.getElementById('forgot-password-form');
+
+      if (formType === 'login') {
+        loginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+        forgotPasswordForm.style.display = 'none';
+      } else if (formType === 'register') {
+        registerForm.style.display = 'block';
+        loginForm.style.display = 'none';
+        forgotPasswordForm.style.display = 'none';
+      } else if (formType === 'forgot') {
+        forgotPasswordForm.style.display = 'block';
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'none';
+      }
+    }
+
+    // Giriş yapma işlemi
+    function handleLogin(event) {
+      event.preventDefault();
+      var username = document.getElementById('login-username').value;
+      var password = document.getElementById('login-password').value;
+
+      if (username === 'admin' && password === '123456') {
+        // Kullanıcı doğru bilgileri girerse Google Classroom'a yönlendir
+        window.location.href = 'https://classroom.google.com';
+      } else {
+        alert('Kullanıcı adı veya şifre yanlış.');
+      }
+    }
+
+    // Kayıt olma işlemi
+    function handleRegister(event) {
+      event.preventDefault();
+      var username = document.getElementById('register-username').value;
+      var password = document.getElementById('register-password').value;
+      var passwordConfirm = document.getElementById('register-password-confirm').value;
+
+      if (password !== passwordConfirm) {
+        alert('Şifreler uyuşmuyor!');
+        return;
+      }
+
+      alert('Kayıt işlemi başarıyla tamamlandı! Artık giriş yapabilirsiniz.');
+      toggleForm('login');
+    }
+
+    // Şifremi unuttum işlemi
+    function handleForgotPassword(event) {
+      event.preventDefault();
+      var email = document.getElementById('forgot-email').value;
+      alert('E-posta adresinize şifre sıfırlama linki gönderildi: ' + email);
+      document.getElementById('forgot-email').value = '';
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <link rel="icon" href="c:\xampp\htdocs\download.jpg" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YasirBz</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome İkonları için -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background-color: rgb(160, 160, 160);
+      background-size: cover; /* Arka planı tam ekran yapar */
+      background-position: center center;
+    }
+
+    header {
+      background-color: rgba(51, 51, 51, 0.8); /* Hafif saydam header */
+      color: white;
+      padding: 10px 0;
+      width: 100%; /* Header tamamen genişliği dolduracak */
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 999;
+    }
+
+    header .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 10px;
+    }
+
+    header h1 {
+      font-size: 1.8em;
+    }
+
+    nav ul {
+      list-style: none;
+    }
+
+    nav ul li {
+      display: inline;
+      margin-left: 20px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+    }
+
+    main {
+      margin-top: 80px; /* Headerın üst kısmını sayfa içeriğinden ayırıyoruz */
+      width: 100%;
+      max-width: 1200px;
+      margin: 30px auto;
+    }
+
+    section {
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    .blog-post {
+      border: none;
+      background-color: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .blog-post h3 {
+      margin-bottom: 10px;
+      background-color: white;
+    }
+
+    .blog-post a {
+      background-color: white;
+      color: #333;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    form button {
+      padding: 10px 15px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 999;
+    }
+
+    /* Fotoğraf ve Video Ortalamak */
+    .gallery, .video {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .gallery img {
+      max-width: 600px;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .video iframe {
+      width: 100%;
+      max-width: 700px;
+      height: 400px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    /* Progres Bar */
+    #progress-bar-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background-color: #ccc;
+      z-index: 9999;
+    }
+
+    #progress-bar {
+      height: 100%;
+      background-color: blue;
+      width: 0%;
+    }
+
+    /* JS Yazıları için Stiller */
+    .js-text {
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #333;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      text-align: center;
+      opacity: 0;
+      animation: fadeIn 2s forwards;
+      width: 100%;
+      min-height: 50px;  /* Yükseklik sabit tutulacak */
+    }
+
+    /* Animasyon - Fade-in */
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    /* Hakkımda Bölümü için Fotoğraf ve Metin Stili */
+    #about {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: left;
+    }
+
+    #about img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin-right: 20px;
+      border: 3px solid #333;
+    }
+
+    #about p {
+      font-size: 1.2em;
+      line-height: 1.8;
+    }
+
+    /* LinkedIn ve GitHub İkonları */
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .social-icons a {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: transparent; /* Şeffaf arka plan */
+      color: #333; /* İkon rengi siyah */
+      text-align: center;
+      line-height: 50px;
+      font-size: 1.5em;
+      transition: color 0.3s ease, background-color 0.3s ease; /* Yumuşak geçişler */
+    }
+
+    /* LinkedIn Hover Efekti */
+    .social-icons a.linkedin:hover {
+      background-color: #0e76a8; /* LinkedIn Mavi */
+      color: white; /* İkon rengi beyaz */
+    }
+
+    /* GitHub Hover Efekti */
+    .social-icons a.github:hover {
+      background-color: #181717; /* GitHub Siyah */
+      color: white; /* İkon rengi beyaz */
+    }
+
+    /* Ampül ve Butonlar için Ortalamayı Yapmak */
+#light-control {
+  display: flex;
+  flex-direction: column; /* Butonları ve görseli dikey sıraya yerleştir */
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* Butonlar arasında boşluk */
+  margin-top: 10px; /* Sayfa üst kısmıyla arayı açalım */
+}
+
+#light-control img {
+  width: 100px; /* Ampülün boyutunu sabit tutalım */
+  height: 160px;
+  margin-bottom: 10px; /* Resmin altına boşluk ekleyelim */
+  transition: width 0.3s ease, height 0.3s ease; /* Geçiş animasyonu */
+}
+
+#light-control button {
+  padding: 12px 18px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2em;
+  width: 200px; /* Buton genişliğini sabitle */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Buton animasyonu */
+}
+
+#light-control button:hover {
+  background-color: #555;
+  transform: scale(1.05); /* Hover'da butonun biraz büyümesi */
+}
+
+
+    /* Tarih ve Saat Bilgisi */
+    #date-time {
+      font-size: 1.2em;
+      color: #333;
+      text-align: center;
+      margin: 10px 0;
+      padding: 5px;
+    }
+
+    /* Modal için stil */
+/* Modal için stil */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Kararma (opacity) ekledik */
+  z-index: 10000;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  padding: 20px;
+  border-radius: 8px;
+  width: 60%;
+  max-width: 800px;
+  position: relative;
+  background-color: white; /* Modal penceresinin arka planı beyaz */
+  border: 3px solid #333;  /* Modal penceresine çerçeve */
+}
+
+.modal-content .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5em;
+  color: #333;
+  cursor: pointer;
+}
+
+
+    .auth-container {
+      width: 100%;
+      max-width: 400px;
+      margin: 50px auto;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 30px;
+      border-radius: 8px;
+    }
+
+    .auth-container input,
+    .auth-container button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .auth-container button {
+      background-color: #333;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .auth-container button:hover {
+      background-color: #555;
+    }
+
+    /* İletişim Formu Stili */
+    .contact-form {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .contact-form h3 {
+      font-size: 1.8em;
+      margin-bottom: 20px;
+    }
+
+    .contact-form input, .contact-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .contact-form button {
+      padding: 10px 15px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .contact-form button:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Progres Bar -->
+  <div id="progress-bar-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <h1>⚓YasirBz</h1>
+      <nav>
+        <ul>
+          <li><a href="https://toros.edu.tr/" target="_blank">Daha Fazla</a></li>
+          <li><a href="https://www.google.com.tr/maps/place/Toros+%C3%9Cniversitesi+Mezitli+Kamp%C3%BCs%C3%BC/@36.7379302,34.5058517,17z/data=!3m1!4b1!4m6!3m5!1s0x14d87548532926bf:0x4b884eb40705ff9a!8m2!3d36.7379302!4d34.5058517!16s%2Fg%2F11r_vtrbb_?hl=tr&entry=ttu&g_ep=EgoyMDI0MTIxMS4wIKXMDSoASAFQAw%3D%3D" target="_blank">Konum</a></li>
+          <li><a href="https://chatgpt.com/" target="_blank">Yardım</a></li>
+          <li><a href="file:///C:/xampp/htdocs/index2.html" target="_blank">Giriş Yap</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+<br><br>
+  <!-- Ana İçerik -->
+  <main>
+    <!-- Tarih ve Saat -->
+    <div id="date-time"></div>
+
+    <!-- JS Yazıları -->
+    <section id="js-text-section">
+      <div class="js-text" id="home"></div>
+    </section>
+
+    <!-- Blog Yazıları -->
+    <section id="home">
+      <div class="blog-post">
+        <h3>Gelişen Teknolojiler ve Gelecek</h3>
+        <p>Teknoloji hızla gelişiyor ve hayatımızın her alanına etki ediyor...</p>
+        <a href="#" class="read-more" onclick="showModal('post1')">Devamını Oku</a>
+      </div>
+
+      <div class="blog-post">
+        <h3>Yapay Zeka: Geleceğin Teknolojisi</h3>
+        <p>Yapay zeka, hayatımızın her alanında giderek daha fazla yer edinmeye başlıyor...</p>
+        <a href="#" onclick="showModal('post2')">Devamını Oku</a>
+      </div>
+    </section>
+
+    <!-- Hakkımda -->
+    <section id="about">
+      <img src="c:\xampp\htdocs\72175692_HEnVERlML_QPiJgBf6D1Wc3xvx44amW7JccZhEnsf0o.jpg" alt="Vesikalık Fotoğraf">
+      <div>
+        <h2>Hakkımda</h2>
+        <p>Merhaba ben Yasir, 2005 doğumluyum Mersin ilinin Erdemli ilçesinde yaşıyorum. Şuan da Toros Üniversitesi'nde Bilgisayar Programcılığı bölümü okumaktayım.</p><br>
+        Ulaşabilirsiniz: <a href="https://www.whatsapp.com/?lang=tr_TR" target="_blank">☎️+905431957200</a>
+        <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank">📧237087003@toros.edu.tr</a>
+      </div>
+    </section>
+
+    <!-- LinkedIn ve GitHub İkonları -->
+    <section id="social">
+      <div class="social-icons">
+        <a href="https://www.linkedin.com" target="_blank" title="LinkedIn" class="linkedin">
+          <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="https://github.com/yasirr0" target="_blank" title="GitHub" class="github">
+          <i class="fab fa-github"></i>
+        </a>
+      </div>
+    </section>
+
+    <!-- Resim -->
+    <section class="gallery">
+      <img src="c:\xampp\htdocs\202110251416-main.cropped_1635146191.jpg" alt="Görsel">
+    </section>
+
+    <!-- Video -->
+    <section class="video">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/FpqUb-FFTHI" frameborder="0" allowfullscreen></iframe>
+    </section>
+ <!-- Ampül ve Butonlar için Kapsayıcı -->
+<section id="light-control">
+  <!-- Işık açma butonu -->
+  <button onclick="document.getElementById('myImage').src='pic_bulbon.gif'">Turn on the light</button>
+  
+  <!-- Ampül görseli -->
+  <img id="myImage" src="pic_bulboff.gif" alt="Ampül">
+  
+  <!-- Işık kapama butonu -->
+  <button onclick="document.getElementById('myImage').src='pic_bulboff.gif'">Turn off the light</button>
+</section>
+<br>
+    <!-- İletişim Formu -->
+    <section id="contact">
+      <div class="contact-form">
+        <h3>İletişim Formu</h3>
+        <form action="iletisim.php" METHOD="POST">
+          <input type="text" name="name" placeholder="Adınızı Girin" required>
+          <input type="email" name="email" placeholder="E-posta Adresinizi Girin" required>
+          <textarea name="message" placeholder="Mesajınızı Girin" rows="4" required></textarea>
+          <button type="submit">Gönder</button>
+        </form>        
+      </div>
+    </section>
+<br>
+    <!-- Modal (Popup) Penceresi -->
+    <div id="post1" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal('post1')">&times;</span>
+        <h3>Gelişen Teknolojiler ve Gelecek - Devamı</h3>
+        <p>Teknoloji hızla gelişiyor ve hayatımızın her alanına etki ediyor. Yapay zeka, robotik teknolojiler ve 5G gibi yeni nesil teknolojiler, iş dünyasından kişisel yaşamlarımıza kadar her şeyi dönüştürüyor...</p>
+      </div>
+    </div>
+
+    <div id="post2" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal('post2')">&times;</span>
+        <h3>Yapay Zeka: Geleceğin Teknolojisi - Devamı</h3>
+        <p>Yapay zeka, hayatımızın her alanında giderek daha fazla yer edinmeye başlıyor. Bu teknoloji, hem iş dünyasında verimliliği artırırken hem de günlük yaşantımızı dönüştürme potansiyeline sahip...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2024 Kişisel Blog | Tüm hakları saklıdır.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Modal (Popup) Gösterme ve Kapatma
+    function showModal(postId) {
+      document.getElementById(postId).style.display = "flex";
+    }
+
+    function closeModal(postId) {
+      document.getElementById(postId).style.display = "none";
+    }
+
+    // Progres Bar Güncelleme
+    window.onscroll = function() {
+      let scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      let scrollPosition = window.scrollY;
+      let scrollPercentage = (scrollPosition / scrollHeight) * 100;
+      document.getElementById('progress-bar').style.width = scrollPercentage + '%';
+    };
+
+    // Sayfa sekmesi değiştiğinde title'ı değiştirme
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        document.title = "İyi günler, yine bekleriz :)";
+      } else {
+        document.title = "YasirBz";
+      }
+    });
+
+    // Tarih ve Saat Güncellemeleri
+    function updateDateTime() {
+      const now = new Date();
+      const dateTime = now.toLocaleString();
+      document.getElementById("date-time").textContent = "Bugünün Tarihi ve Saati: " + dateTime;
+    }
+
+    setInterval(updateDateTime, 1000);  // Her saniye güncelliyoruz
+
+    // Harf harf yazı animasyonu
+    const jsTexts = [
+      "Blog sitesine hoş geldiniz",
+      "I ' am a programmer",
+      "I ' am a developer"
+    ];
+
+    let currentText = 0;
+    let currentChar = 0;
+
+    function typeText() {
+      const jsTextContainer = document.getElementById("home");
+      const currentSentence = jsTexts[currentText];
+      
+      jsTextContainer.textContent = currentSentence.substring(0, currentChar);
+      
+      if (currentChar < currentSentence.length) {
+        currentChar++;
+      } else {
+        currentText = (currentText + 1) % jsTexts.length;
+        currentChar = 0;
+        setTimeout(typeText, 1000); // Bir kelime bitince 1 saniye bekle
+      }
+    }
+
+    setInterval(typeText, 100);  // Harf harf yazma işlemi
+
+  </script>
+</body>
+</html>
